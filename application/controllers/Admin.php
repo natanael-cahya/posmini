@@ -6,10 +6,13 @@ class Admin extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        is_logged_in();
+        $this->load->model('M_product');
     }
 
     public function index()
     {
-        return view('admin/home');
+        $data = $this->M_product->get_data_limit()->result();
+        return view('admin/home', ['id' => $this->session->userdata('id'), 'data' => $data]);
     }
 }
