@@ -16,7 +16,8 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('pass', 'password', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
-            return view('login');
+            $judul = 'Admin Login Page';
+            return view('login', ['judul' => $judul]);
         } else {
             $this->login();
         }
@@ -48,6 +49,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata('id');
         $this->session->unset_userdata('email');
 
-        return view('login');
+        $judul = 'Admin Login Page';
+        return view('login', ['judul' => $judul]);
     }
 }

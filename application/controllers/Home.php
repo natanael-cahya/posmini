@@ -9,10 +9,7 @@ class Home extends CI_Controller
     }
     public function index()
     {
-        //var_dump(base_url());
-        $im = "http://localhost/posmini/assets/img";
-        $p = FCPATH . "assets\img";
-        //var_dump($p);
+        $judul = 'Home Page';
         $data = array(
             array(
                 'nama' => 'Paket Desktop',
@@ -36,6 +33,6 @@ class Home extends CI_Controller
                 'deskripsi' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam culpa exercitationem ipsum. Numquam aut vitae libero tenetur, id unde repudiandae labore, quidem laborum in ratione. Tenetur eveniet quisquam temporibus corporis iste eaque recusandae cum dolore.'
             )
         );
-        return view('index', ['posts' => $data]);
+        return view('index', ['posts' => $data, 'judul' => $judul]);
     }
 }

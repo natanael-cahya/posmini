@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blade</title>
+    <title><?php echo e($judul); ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
+    <link rel="shortcut icon" href="https://majoo.id/favicon.png">
+  </head>
 <body>
      <?php if(empty($id)): ?>
     
@@ -50,4 +51,14 @@
       <?php echo $__env->yieldContent('content'); ?>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script><?php /**PATH C:\xampp\htdocs\posmini\application\views/layouts/master.blade.php ENDPATH**/ ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script src="//cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+<script>
+  var ckeditor = CKEDITOR.replace('isi',{
+        height:'200px',
+        width:'100%'
+  });
+  
+  CKEDITOR.disableAutoInline = true;
+  CKEDITOR.inline('editable');
+  </script><?php /**PATH C:\xampp\htdocs\posmini\application\views/layouts/master.blade.php ENDPATH**/ ?>
