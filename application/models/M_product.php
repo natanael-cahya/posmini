@@ -21,6 +21,10 @@ class M_product extends CI_Model
 
         return $this->db->get()->result();
     }
+    function get_one($params)
+    {
+        return $this->db->get_where('produk', ['id_produk' => $params])->row_array();
+    }
 
     function jumlah_data()
     {
@@ -30,7 +34,11 @@ class M_product extends CI_Model
     {
         $this->db->insert($table, $data);
     }
-
+    function update($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
     function delete($where, $table)
     {
         $this->db->where($where);

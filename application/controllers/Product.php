@@ -42,13 +42,11 @@ class Product extends CI_Controller
         $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['num_tag_close'] = '</span></li>';
 
-        //paramscustom
         $config['enable_query_strings'] = TRUE;
         $config['page_query_string'] = TRUE;
         $config['use_page_numbers'] = TRUE;
         $config['reuse_query_string'] = TRUE;
         $config['query_string_segment'] = 'page';
-
 
         //    $config['uri_segment'] = 3;
         $this->pagination->initialize($config);
@@ -87,23 +85,83 @@ class Product extends CI_Controller
             'harga' => $harga,
             'img' => $nama_f,
             'id_kategori' => $kat
-
         ];
 
         $cek = $this->M_product->save($data, 'produk');
         echo "<script>alert('Data berhasil disimpan');location='../product'</script>";
     }
 
-    function delete()
+    function edit()
     {
+        $judul = 'Edit Data';
+
         $config['enable_query_strings'] = TRUE;
         $config['page_query_string'] = TRUE;
         $config['use_page_numbers'] = TRUE;
         $config['reuse_query_string'] = TRUE;
         $config['query_string_segment'] = 'id_produk';
 
+        $kategori = $this->M_category->get_data();
         $params = $this->input->get('id_produk');
-        //var_dump($params);
+        $data = $this->M_product->get_one($params);
+        return view('admin/editProduk', ['data' => $data, 'kategori' => $kategori, 'judul' => $judul]);
+    }
+    function update()
+    {
+
+        $nama = $this->input->post('nama');
+        $harga = $this->input->post('harga');
+        $kat = $this->input->post('kat');
+        $img = $this->input->post('img');
+        $desk = $this->input->post('isi');
+
+        if (empty($img)) {
+            $data = [
+                'nama_produk' => $nama,
+                'deskripsi' => $desk,
+                'harga' => $harga,
+
+                'id_kategori' => $kat
+            ];
+            $where = ['id_produk' => $this->input->get('id_produk')];
+            $this->M_product->update($where, $data, 'produk');
+            echo "<script>alert('Data berhasil DiUbah');location='../product'</script>";
+        } else {
+            $params = $this->input->get('id_produk');
+            $p = $this->db->get_where('produk', ['id_produk' => $params])->row_array();
+            $par = $p['img'];
+            $path  = './assets/img/' . $par;
+            unlink($path);
+
+            $config['upload_path']          = './assets/img/';
+            $config['allowed_types']        = 'gif|jpg|png';
+
+            $config['encrypt_name']            = TRUE;
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            $this->upload->do_upload('img');
+
+            $data['nama_berkas'] = $this->upload->data("file_name");
+            $nama_f = $data['nama_berkas'];
+
+            $data = [
+                'nama_produk' => $nama,
+                'deskripsi' => $desk,
+                'harga' => $harga,
+                'img' => $nama_f,
+                'id_kategori' => $kat
+            ];
+            $where = ['id_produk' => $this->input->get('id_produk')];
+            $this->M_product->update($where, $data, 'produk');
+            echo "<script>alert('Data berhasil DiUbah');location='../product'</script>";
+        }
+    }
+
+    function delete()
+    {
+
+
+        $params = $this->input->get('id_produk');
         $p = $this->db->get_where('produk', ['id_produk' => $params])->row_array();
         $par = $p['img'];
         $path  = './assets/img/' . $par;
