@@ -54,4 +54,54 @@ class Category extends CI_Controller
         $data = $this->M_category->get_all($config['per_page'], $from);
         return view('admin/category', ['data' => $data, 'id' => $this->session->userdata('id'), 'link' => $link, 'judul' => $judul]);
     }
+    public function add_data()
+    {
+        $nama = $this->input->post('nama');
+        $desk = $this->input->post('isi');
+
+        $data = [
+            'id_kategori' => uniqid(),
+            'nama_kategori' => $nama,
+            'deskripsi_kategori' => $desk
+        ];
+
+        $cek = $this->M_category->save($data, 'kategori');
+        echo "<script>alert('Data berhasil disimpan');location='../category'</script>";
+    }
+    function edit()
+    {
+        $judul = 'Edit Data';
+
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
+        $config['use_page_numbers'] = TRUE;
+        $config['reuse_query_string'] = TRUE;
+        $config['query_string_segment'] = 'id_produk';
+
+
+        $params = $this->input->get('id_kategori');
+        $data = $this->M_category->get_one($params);
+        return view('admin/editCategory', ['data' => $data, 'judul' => $judul]);
+    }
+    function update()
+    {
+
+        $nama = $this->input->post('nama');
+        $desk = $this->input->post('isi');
+
+        $data = [
+            'nama_kategori' => $nama,
+            'deskripsi_kategori' => $desk
+        ];
+        $where = ['id_kategori' => $this->input->get('id_kategori')];
+        $this->M_category->update($where, $data, 'kategori');
+        echo "<script>alert('Data berhasil DiUbah');location='../category'</script>";
+    }
+
+    function delete()
+    {
+        $params = $this->input->get('id_kategori');
+        $this->M_category->delete(['id_kategori' => $params], 'kategori');
+        echo "<script>alert('Data berhasil Dihapus');location='../category'</script>";
+    }
 }
