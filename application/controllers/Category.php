@@ -103,6 +103,13 @@ class Category extends CI_Controller
     }
     public function add_data()
     {
+        $this->form_validation->set_rules('nama', 'Nama', 'is_unique[kategori.nama_kategori]');
+
+        if ($this->form_validation->run() == FALSE) {
+            echo "<script>alert('Nama Kategori Telah diGunakan');location='../category'</script>";
+            return false;
+        }
+
         $nama = $this->input->post('nama');
         $desk = $this->input->post('isi');
 

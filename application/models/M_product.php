@@ -72,6 +72,20 @@ class M_product extends CI_Model
             return ['status' => false, 'message' => $ex->getMessage()];
         }
     }
+    public function deleteAPI($id_produk)
+    {
+        try {
+            $this->db->delete('produk', ['id_produk' => $id_produk]);
+            $error = $this->db->error();
+            if ($error['code']) {
+                throw new Exception('Error : ' . $error['message']);
+                return false;
+            }
+            return ['status' => true, 'data' => $this->db->affected_rows()];
+        } catch (Exception $ex) {
+            return ['status' => false, 'message' => $ex->getMessage()];
+        }
+    }
 
     function get_one($params)
     {
