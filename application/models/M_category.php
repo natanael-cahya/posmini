@@ -9,9 +9,9 @@ class M_category extends CI_Model
     }
 
 
-    public function getAPI($id_produk = null)
+    public function getAPI($id_kategori = null)
     {
-        if ($id_produk === NULL) {
+        if ($id_kategori === NULL) {
             $this->db->select('*');
             $this->db->from('produk');
             $this->db->join('kategori', 'produk.id_kategori=kategori.id_kategori');
@@ -20,7 +20,7 @@ class M_category extends CI_Model
             $this->db->select('*');
             $this->db->from('produk');
             $this->db->join('kategori', 'produk.id_kategori=kategori.id_kategori');
-            $this->db->where('produk.id_produk=', $id_produk);
+            $this->db->where('produk.id_produk=', $id_kategori);
             return $this->db->get()->result();
         }
     }

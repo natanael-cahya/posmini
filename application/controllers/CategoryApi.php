@@ -15,10 +15,10 @@ class CategoryApi extends RestController
     {
         $id_kategori = $this->get('id_kategori');
         if ($id_kategori == NULL) {
-            $data = $this->M_product->getAPI();
+            $data = $this->M_category->getAPI();
             $this->response(['status' => true, 'data' => $data], RestController::HTTP_OK);
         } else {
-            $data = $this->M_product->getAPI($id_kategori);
+            $data = $this->M_category->getAPI($id_kategori);
             if ($data) {
                 $this->response(['status' => true, 'data' => $data], RestController::HTTP_OK);
             } else {
