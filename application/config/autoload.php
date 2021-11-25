@@ -103,7 +103,7 @@ $autoload['helper'] = array('view', 'url', 'restrict');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('pagination');
 
 /*
 | -------------------------------------------------------------------

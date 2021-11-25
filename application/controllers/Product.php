@@ -10,47 +10,24 @@ class Product extends CI_Controller
         is_logged_in();
         $this->load->model('M_product');
         $this->load->model('M_category');
+        $this->load->library('form_validation');
     }
 
     public function index()
     {
-        echo $this->uri->segment(2);
+        //echo $this->uri->segment(2);
         $judul = 'Product Page';
         $jumlah_data = $this->M_product->jumlah_data();
 
         $config['base_url'] = base_url() . '/product';
         $config['total_rows'] = $jumlah_data;
-        $config['per_page'] = 5;
+        $config['per_page'] = 4;
 
-        //Navigasi Custom
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = 'First';
-        $config['last_link'] = 'Last';
-        $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['first_tag_close'] = '</span></li>';
-        $config['prev_link'] = '&laquo';
-        $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['prev_tag_close'] = '</span></li>';
-        $config['next_link'] = '&raquo';
-        $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['next_tag_close'] = '</span></li>';
-        $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['last_tag_close'] = '</span></li>';
-        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close'] = '</span></li>';
-
-        $config['enable_query_strings'] = TRUE;
-        $config['page_query_string'] = TRUE;
-        $config['use_page_numbers'] = TRUE;
-        $config['reuse_query_string'] = TRUE;
+        $this->load->config('pagination');
         $config['query_string_segment'] = 'page';
 
-        //    $config['uri_segment'] = 3;
+
         $this->pagination->initialize($config);
-        //$from = $this->uri->segment(3);
         $from = ($this->input->get('page')) ? (($this->input->get('page') - 1) * $config["per_page"]) : 0;
         $link = $this->pagination->create_links();
 
@@ -59,8 +36,38 @@ class Product extends CI_Controller
 
         return view('admin/product', ['id' => $this->session->userdata('id'), 'kategori' => $kategori, 'data' => $data, 'link' => $link, 'judul' => $judul]);
     }
+    public function search()
+    {
+        $judul = 'Product Page';
+        $jumlah_data = $this->M_product->jumlah_data();
+
+        $config['base_url'] = base_url() . '/product';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 5;
+
+        $this->load->config('pagination');
+        $config['query_string_segment'] = array('page', 'np');
+
+
+        $this->pagination->initialize($config);
+        $search = ($this->input->get('np')) ? $this->input->get('np') : '';
+        $from = ($this->input->get('page')) ? (($this->input->get('page') - 1) * $config["per_page"]) : 0;
+        $link = $this->pagination->create_links();
+
+        $data = $this->M_product->get_all($config['per_page'], $from, $search);
+        $kategori = $this->M_category->get_data();
+
+        return view('admin/product', ['id' => $this->session->userdata('id'), 'kategori' => $kategori, 'data' => $data, 'link' => $link, 'judul' => $judul]);
+    }
     public function add_data()
     {
+
+        $this->form_validation->set_rules('nama', 'Nama', 'is_unique[produk.nama_produk]');
+
+        if ($this->form_validation->run() == FALSE) {
+            echo "<script>alert('Nama Produk Telah diGunakan');location='../product'</script>";
+            return false;
+        }
         $nama = $this->input->post('nama');
         $harga = $this->input->post('harga');
         $kat = $this->input->post('kat');

@@ -7,10 +7,10 @@
         <?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="col-lg-3 col-md-6 text-center">
             <div class="card" style="width: 18rem;">
-                <img src="<?php echo e(base_url().'assets/img/'.$item['img']); ?>" class="card-img-top" alt="<?php echo e($item['nama']); ?>">
+                <img src="<?php echo e(base_url().'assets/img/'.$item->img); ?>" class="card-img-top" alt="<?php echo e($item->nama_produk); ?>">
                 <div class="card-body">
-                  <h5 class="card-title"><?php echo e($item['nama']); ?></h5>
-                  <p class="card-text"> <?php echo e($item['deskripsi']); ?></p>
+                  <h5 class="card-title"><?php echo e($item->nama_produk); ?></h5>
+                  <p class="card-text"> <?php echo $item->deskripsi; ?></p>
                   <a href="#" class="btn btn-primary btn-sm mx-auto">Beli</a>
                 </div>
               </div>
@@ -18,6 +18,13 @@
             
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
+    <div class="row mt-5">
+      <div class="col">
+        <?php echo $link; ?>
+
+      </div>
+    </div>
+    
 </div>
     
 <?php $__env->stopSection(); ?>

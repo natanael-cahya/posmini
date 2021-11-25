@@ -22,10 +22,10 @@
       <tr>
         <th> {{ $no++ }}</th>
       <td>{{ $item->nama_produk; }}</td>
-      <td>{{ $item->deskripsi; }}</td>
-      <td>{{ $item->harga; }}</td>
-      <td>{{ $item->img; }}</td>
-      <td>{{ $item->id_kategori; }}</td>
+      <td>{!! $item->deskripsi; !!}</td>
+      <td>Rp.{{ number_format("$item->harga", 0, ",", ".") }}</td>
+      <td><img src="{{ base_url('assets/img/').$item->img }}" width="100px" height="100px"></td>
+      <td>{{ $item->nama_kategori; }}</td>
     </tr>
    @endforeach
 </tbody>

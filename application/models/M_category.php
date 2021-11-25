@@ -12,14 +12,26 @@ class M_category extends CI_Model
     {
         return $this->db->get('kategori')->result();
     }
-    public function jumlah_data()
+    function jumlah_data($st = null)
     {
-        return $this->db->get('kategori')->num_rows();
+        if ($st == "NIL") $st = "";
+        $this->db->select('*');
+        $this->db->from('kategori');
+        $this->db->like('nama_kategori', $st);
+        return $this->db->get()->num_rows();
     }
-    function get_all($number, $offset)
+    public function get_all($number, $offset, $st = NULL)
     {
-        return $this->db->get('kategori', $number, $offset)->result();
+        if ($st == 'NIL') $st = "";
+        $this->db->select('*');
+        $this->db->from('kategori');
+        // $this->db->join('kategori', 'produk.id_kategori=kategori.id_kategori');
+        $this->db->like('nama_kategori', $st);
+        $this->db->limit($number, $offset);
+
+        return $this->db->get()->result();
     }
+
     function get_one($params)
     {
         return $this->db->get_where('kategori', ['id_kategori' => $params])->row_array();

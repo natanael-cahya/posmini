@@ -7,10 +7,10 @@
         @foreach ($posts as $item)
         <div class="col-lg-3 col-md-6 text-center">
             <div class="card" style="width: 18rem;">
-                <img src="{{ base_url().'assets/img/'.$item['img'] }}" class="card-img-top" alt="{{ $item['nama'] }}">
+                <img src="{{ base_url().'assets/img/'.$item->img }}" class="card-img-top" alt="{{ $item->nama_produk }}">
                 <div class="card-body">
-                  <h5 class="card-title">{{ $item['nama'] }}</h5>
-                  <p class="card-text"> {{ $item['deskripsi'] }}</p>
+                  <h5 class="card-title">{{ $item->nama_produk }}</h5>
+                  <p class="card-text"> {!! $item->deskripsi !!}</p>
                   <a href="#" class="btn btn-primary btn-sm mx-auto">Beli</a>
                 </div>
               </div>
@@ -18,6 +18,12 @@
             
         @endforeach
     </div>
+    <div class="row mt-5">
+      <div class="col">
+        {!! $link !!}
+      </div>
+    </div>
+    
 </div>
     
 @endsection

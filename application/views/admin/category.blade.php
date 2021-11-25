@@ -7,9 +7,14 @@
    <button class="btn btn-info btn-sm mt-4"  data-bs-toggle="modal" data-bs-target="#exampleModal" >+ Add Data</button>
    <?php $no=1; ?>
    <div class="row mt-3">
-     <div class="col-md-3">
-  Search : <input type="text" class="form-control">
-     </div>
+    <form class="inline" action="{{ base_url('category/search') }}">
+      <div class="input-group mb-3">
+        
+        <input type="text" value="{{ (empty($_GET['np'])) ? '' : $_GET['np'] }}" class="form-control" name="np" placeholder="Nama Kategori" aria-label="nama Produk" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+        
+      </div>
+    </form>
   </div>
    <table class="table mt-3">
     <thead>

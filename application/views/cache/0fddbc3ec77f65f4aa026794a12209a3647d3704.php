@@ -22,10 +22,10 @@
       <tr>
         <th> <?php echo e($no++); ?></th>
       <td><?php echo e($item->nama_produk); ?></td>
-      <td><?php echo e($item->deskripsi); ?></td>
-      <td><?php echo e($item->harga); ?></td>
-      <td><?php echo e($item->img); ?></td>
-      <td><?php echo e($item->id_kategori); ?></td>
+      <td><?php echo $item->deskripsi; ?></td>
+      <td>Rp.<?php echo e(number_format("$item->harga", 0, ",", ".")); ?></td>
+      <td><img src="<?php echo e(base_url('assets/img/').$item->img); ?>" width="100px" height="100px"></td>
+      <td><?php echo e($item->nama_kategori); ?></td>
     </tr>
    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </tbody>

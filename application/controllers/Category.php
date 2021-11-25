@@ -54,6 +54,53 @@ class Category extends CI_Controller
         $data = $this->M_category->get_all($config['per_page'], $from);
         return view('admin/category', ['data' => $data, 'id' => $this->session->userdata('id'), 'link' => $link, 'judul' => $judul]);
     }
+
+    public function search()
+    {
+        $judul = 'Category Page';
+        $search = ($this->input->get('np')) ? $this->input->get('np') : '';
+        $jumlah_data = $this->M_category->jumlah_data($search);
+
+        $config['base_url'] = base_url() . '/category';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 5;
+
+        //Navigasi Custom
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = 'First';
+        $config['last_link'] = 'Last';
+        $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['first_tag_close'] = '</span></li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['prev_tag_close'] = '</span></li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['next_tag_close'] = '</span></li>';
+        $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['last_tag_close'] = '</span></li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close'] = '</span></li>';
+
+        $config['enable_query_strings'] = TRUE;
+        $config['page_query_string'] = TRUE;
+        $config['use_page_numbers'] = TRUE;
+        $config['reuse_query_string'] = TRUE;
+        $config['query_string_segment'] = array('page', 'npa');
+
+
+        $this->pagination->initialize($config);
+
+        $from = ($this->input->get('page')) ? (($this->input->get('page') - 1) * $config["per_page"]) : 0;
+        $link = $this->pagination->create_links();
+
+        $data = $this->M_category->get_all($config['per_page'], $from, $search);
+
+        return view('admin/category', ['id' => $this->session->userdata('id'), 'data' => $data, 'link' => $link, 'judul' => $judul]);
+    }
     public function add_data()
     {
         $nama = $this->input->post('nama');

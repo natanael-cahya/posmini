@@ -1,6 +1,7 @@
 {
     "require": {
         "kenjis/codeigniter-ss-twig": "^1.0",
-        "jenssegers/blade": "^1.4"
+        "jenssegers/blade": "^1.4",
+        "chriskacerguis/codeigniter-restserver": "^3.1"
     }
 }
