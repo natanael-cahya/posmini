@@ -1,4 +1,4 @@
-URL to login admin : localhost/posmini/auth
+URL to login admin : localhost/posmini/auth |
 Username & Password : a | a
 
 ###################
